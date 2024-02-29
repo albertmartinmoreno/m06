@@ -1,0 +1,20 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit($event)">
+    <div class="d-flex justify-content-center align-items-center flex-column vh-100 bg-light">
+        <div class="fw-bolder mb-3">Register</div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input type="text" name="name" formControlName="name" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input type="password" name="password" formControlName="password" class="form-control">
+        </div>
+        @if (name?.valid && password?.valid) {
+            <button type="submit" class="btn btn-outline-primary mb-3">Sign up</button>
+        }
+
+        @if (message) {
+            <div class="alert alert-danger">{{ message }}</div>
+        }
+    </div>
+</form>
