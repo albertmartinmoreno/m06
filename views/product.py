@@ -1,7 +1,7 @@
 from flask_smorest import Blueprint
 from flask.views import MethodView
 from models.product import ProductModel
-from flask_jwt_extended import jwt_required, current_user
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.user import UserModel
 from db import db
 
@@ -26,9 +26,7 @@ class ProductView(MethodView):
             for product in ProductModel.query.all()
         ]
 
-        return {
-            'products': products
-        }
+        return products
     
 @product.route('/favorite_products/<int:product_id>')
 
@@ -37,8 +35,10 @@ class FavoriteProductView(MethodView):
 
     @product.response(201)
 
-    def put(self, product_id):
-        user = UserModel.query.get(current_user.id)
+    def get(self, product_id):
+        identity = get_jwt_identity()
+
+        user = UserModel.query.get(identity)
 
         product = ProductModel.query.get(product_id)
 
@@ -51,7 +51,9 @@ class FavoriteProductView(MethodView):
     @product.response(204)
 
     def delete(self, product_id):
-        user = UserModel.query.get(current_user.id)
+        identity = get_jwt_identity()
+        
+        user = UserModel.query.get(identity)
 
         product = ProductModel.query.get(product_id)
 

@@ -27,9 +27,7 @@ class LoginView(MethodView):
             payload['password'], 
             user.password
         ):
-            return {
-                'token': create_access_token(identity=user.id)
-            }
+            return create_access_token(identity=user.id)
         else:
             abort(401)
 

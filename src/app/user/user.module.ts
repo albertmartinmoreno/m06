@@ -9,7 +9,7 @@ import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/
 @NgModule({
   declarations: [
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     CommonModule,

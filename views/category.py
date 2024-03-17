@@ -30,6 +30,4 @@ class CategoryView(MethodView):
             for category in CategoryModel.query.all()
         ]
         
-        return {
-            'categories': categories
-        }
+        return categories

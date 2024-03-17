@@ -1,1 +1,50 @@
-<p>products works!</p>
+<div class="container">
+    <div class="d-flex justify-content-center align-items-center flex-column mb-5 text-center">
+        <div class="mb-3">
+            <label for="name" class="form-label fw-bolder">Name</label>
+            <input type="text" class="form-control text-center" [(ngModel)]="name" id="name">
+        </div>
+        <div class="mb-3">
+            <label for="price" class="form-label fw-bolder">Price</label>
+            <input type="range" class="form-range" [(ngModel)]="price" id="price">
+            <span>{{ price | currency: 'EUR' }}</span>
+        </div>
+        <div>
+            <label for="category" class="form-label fw-bolder">Category</label>
+            <select [(ngModel)]="category" id="category" class="form-select">
+                @for (category of categories; track category) {
+                    <option [ngValue]="category">{{ category.name }}</option>
+                }
+            </select>
+        </div>
+    </div>
+    <table class="table table-striped text-center mb-5">
+        <thead>
+            <th>Name</th>
+            <th>Price</th>
+        </thead>
+        <tbody>
+            @for(product of products | name: name | price: price | paginate: {itemsPerPage: itemsPerPage, currentPage: currentPage}; track product
+            ) {
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price | currency: 'EUR' }}</td>
+                    <td>
+                        <input type="text" [(ngModel)]="product.quantity" class="form-control text-center">
+                    </td>
+                    <td>
+                        <button class="btn btn-outline-success" (click)="buyProduct(product)">
+                            <i class="bi bi-bag-fill"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-outline-danger" (click)="addFavorite(product.id)">
+                            <i class="bi bi-heart-fill"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <pagination-controls (pageChange)="pageChange($event)" previousLabel="Previous" nextLabel="Next" class="text-center"></pagination-controls>
+</div>

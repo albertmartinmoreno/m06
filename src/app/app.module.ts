@@ -5,16 +5,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
+import { CartModule } from './cart/cart.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     UserModule,
-    ProductModule
+    ProductModule,
+    CartModule
   ],
   providers: [
     provideClientHydration()

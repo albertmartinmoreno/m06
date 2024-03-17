@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../../interfaces/user';
+import { User } from '../user';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../user.service';
 import { Error } from '../../interfaces/error';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -17,6 +18,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder, 
     private userService: UserService, 
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -48,7 +50,7 @@ export class RegisterComponent implements OnInit {
     return this.formGroup.get('password');
   }
 
-  onSubmit(event: Event) {
+  ngSubmit(event: Event) {
     event.preventDefault();
 
     if (this.formGroup.valid) {
@@ -56,6 +58,9 @@ export class RegisterComponent implements OnInit {
            
       this.userService.register(user).subscribe(
         {
+          next: (): void => {
+            this.router.navigate(['/login']);
+          },
           error: (error: Error) => {
             this.message = error.status;
           }
